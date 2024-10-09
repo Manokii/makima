@@ -1,0 +1,33 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "bun --env-file=.env run next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^0.0.51",
+    "@repo/ui": "*",
+    "@t3-oss/env-nextjs": "^0.11.1",
+    "ai": "^3.4.9",
+    "jiti": "^2.3.3",
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tweetnacl": "^1.0.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5"
+  }
+}
