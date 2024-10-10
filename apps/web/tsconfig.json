@@ -1,6 +1,10 @@
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["../../node_modules/@repo/ui/*", "../../packages/ui/*"]
+    },
     "plugins": [
       {
         "name": "next"
