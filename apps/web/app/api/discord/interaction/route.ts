@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 export const dynamic = "force-dynamic"; // defaults to auto
 
@@ -16,12 +17,42 @@ const InteractionContextType = {
   BOT_DM: 1,
   PRIVATE_CHANNEL: 2,
 } as const;
+
 type InteractionContextType =
   (typeof InteractionContextType)[keyof typeof InteractionContextType];
 
+const userSchema = z.object({
+  avatar: z.string(),
+  // avatar_decoration_data: z.unknown().nullish(),
+  bot: z.boolean(),
+  // clan: z.string().nullish(),
+  discriminator: z.string(),
+  global_name: z.string(),
+  id: z.string(),
+  // public_flags: z.number(),
+  system: z.boolean(),
+  username: z.string(),
+});
+
+const reqSchema = z.object({
+  app_permissions: z.string(),
+  application_id: z.string(),
+  authorizing_integration_owners: z.object({}),
+  entitlements: z.array(z.string()),
+  id: z.string(),
+  token: z.string(),
+  type: z.nativeEnum(InteractionType),
+  user: userSchema,
+  version: z.number(),
+});
+
 export async function POST(request: Request) {
-  const body = await request.json();
-  console.log("Request XXXX", request);
-  console.log("Body XXXX", body);
-  return NextResponse.json({ message: "Hello, World!", request });
+  const rawBody = await request.json();
+  console.log("Request", request, "\n\nBODY", rawBody);
+  const body = reqSchema.parse(rawBody);
+
+  if (body.type === InteractionType.PING) {
+    return NextResponse.json({ type: 1 }, { status: 200 });
+  }
+  return NextResponse.json({ message: "Hello, World!" });
 }
